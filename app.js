@@ -7,6 +7,9 @@ const app = express()
 
 const Todo = require('./models/todo')
 
+// 載入 method-override
+const methodOverride = require('method-override')
+
 // 設定連線到 mongoDB
 mongoose.connect('mongodb://localhost/todo-list', { useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -29,6 +32,9 @@ app.set('view engine', 'hbs')
 
 // setting body-parser
 app.use(express.urlencoded({ extended: true })) //改寫成 express
+
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 
 // 設定路由
 app.get('/', (req, res) => {
