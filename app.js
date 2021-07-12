@@ -5,8 +5,9 @@ const exphbs = require('express-handlebars')
 
 // 引用路由器
 const routes = require('./routes')
-const app = express()
+require('./config/mongoose')
 
+const app = express()
 
 // 載入 method-override
 const methodOverride = require('method-override')
