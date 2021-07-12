@@ -61,6 +61,7 @@ app.get('/todos/:id/edit', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
     .lean()
+    .sort({ _id: 'asc' }) // 新增這裡：根據 _id 升冪排序
     .then((todo) => res.render('edit', { todo }))
     .catch(error => console.log(error))
 })
