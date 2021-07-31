@@ -5,11 +5,34 @@ const home = require('./modules/home')
 
 const todos = require('./modules/todo')
 
-// 將網址結構符合 / 字串的 request 導向 home 模組 
+const users = require('./modules/users')
+
+router.use('/', function (req, res, next) {
+  const method = req.method
+  const timeStart = new Date()
+
+  const date = timeStart.toISOString().slice(0, 10)
+  const time = timeStart.toLocaleTimeString('en-US', { timeStyle: 'medium', hour12: false })
+
+  const url = req.url
+
+  res.locals.logs = { method: method, date: date, time: time, url: url }
+
+  res.on('finish', () => {
+    const timeEnd = new Date()
+    const ping = timeEnd - timeStart
+
+    const message = `${date} ${time} | ${method} from ${url} | total time: ${ping}ms`
+    console.log(message)
+  })
+  next()
+})
+
 router.use('/', home)
 
-// 將網址結構符合 /todos 字串開頭的 request 導向 todos 模組 
 router.use('/todos', todos)
+
+router.use('/users', users)
 
 // 匯出路由器
 module.exports = router
