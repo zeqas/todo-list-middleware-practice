@@ -41,4 +41,9 @@ router.post('/register', (req, res) => {
   })
 })
 
+router.get('/logout', (req, res) => {
+  req.logout()
+  res.redirect('/users/login') // 清除 session
+})
+
 module.exports = router
