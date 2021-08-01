@@ -2,9 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const home = require('./modules/home')
-
 const todos = require('./modules/todo')
-
 const users = require('./modules/users')
 
 router.use('/', function (req, res, next) {
@@ -28,11 +26,10 @@ router.use('/', function (req, res, next) {
   next()
 })
 
-router.use('/', home)
+const { authenticator} = require('../middleware/auth')
 
-router.use('/todos', todos)
-
+router.use('/todos', authenticator, todos)
 router.use('/users', users)
-
+router.use('/', authenticator, home)
 // 匯出路由器
 module.exports = router
