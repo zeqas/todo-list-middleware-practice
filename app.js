@@ -35,9 +35,6 @@ app.use(methodOverride('_method'))
 // 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
 usePassport(app)
 
-// 將 request 導入路由器
-app.use(routes)
-
 app.use((req, res, next) => {
   // console.log(req.user) 
 
@@ -49,6 +46,8 @@ app.use((req, res, next) => {
   res.locals.user = req.user
   next()
 })
+// 將 request 導入路由器
+app.use(routes)
 
 // 設定 port 
 app.listen(PORT, () => {
