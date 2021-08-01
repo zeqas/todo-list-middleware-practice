@@ -38,6 +38,18 @@ usePassport(app)
 // 將 request 導入路由器
 app.use(routes)
 
+app.use((req, res, next) => {
+  // console.log(req.user) 
+
+  // 把 req.isAuthenticated() 回傳的布林值，交接給 res 使用
+  res.locals.isAuthenticated = req.isAuthenticated() 
+
+  // 把使用者資料交接給 res 使用
+  // **放在 res.locals 裡的資料，所有的 view 都可以存取
+  res.locals.user = req.user
+  next()
+})
+
 // 設定 port 
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
