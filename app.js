@@ -4,9 +4,6 @@ const exphbs = require('express-handlebars')
 const session = require('express-session')
 const flash = require('connect-flash') // 引用套件
 
-require('dotenv').config()
-console.log("---------------------")
-console.log(process.env)
 // 如果應用程式不是在「正式上線模式 (production mode)」中執行，就透過 dotenv 去讀取在 env 檔案裡的資訊
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()

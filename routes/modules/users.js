@@ -1,17 +1,19 @@
 const express = require('express')
 const router = express.Router()
 
-const User = require('../../models/user')
-
 const passport = require('passport')
 const bcrypt = require('bcryptjs')  // 載入套件
+
+const User = require('../../models/user')
 
 router.get('/login', (req, res) => {
   res.render('login')
 })
 
-router.post('/login', (req, res) => {
-})
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: 'users/login'
+}))
 
 router.get('/register', (req, res) => {
   res.render('register')
@@ -66,6 +68,7 @@ router.post('/register', (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.logout()
+  req.flash('success_msg', '你已經成功登出。')
   res.redirect('/users/login') // 清除 session
 })
 
