@@ -2,6 +2,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
+const flash = require('connect-flash') // 引用套件
 // 引用路由器
 const routes = require('./routes')
 
@@ -35,6 +36,7 @@ app.use(methodOverride('_method'))
 // 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
 usePassport(app)
 
+app.use(flash())
 app.use((req, res, next) => {
   // console.log(req.user) 
 
@@ -44,6 +46,10 @@ app.use((req, res, next) => {
   // 把使用者資料交接給 res 使用
   // **放在 res.locals 裡的資料，所有的 view 都可以存取
   res.locals.user = req.user
+  // 設定 success_msg 訊息
+  res.locals.success_msg = req.flash('success_msg')
+  // 設定 warning_msg 訊息
+  res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
 // 將 request 導入路由器

@@ -9,10 +9,10 @@ const todoSchema = new Schema({
     type: Boolean,
     default: false
   },
-  userId: { // 加入關聯設定
-    Type: Schema.Types.ObjectId,
+  userId: {  // 加入關聯設定
+    type: Schema.Types.ObjectId,
     ref: 'User',
-    index: true, // 把 userId 設定成「索引」
+    index: true,
     required: true
   }
 })
