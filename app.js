@@ -3,6 +3,14 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
 const flash = require('connect-flash') // 引用套件
+
+require('dotenv').config()
+console.log("---------------------")
+console.log(process.env)
+// 如果應用程式不是在「正式上線模式 (production mode)」中執行，就透過 dotenv 去讀取在 env 檔案裡的資訊
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 // 引用路由器
 const routes = require('./routes')
 
@@ -12,7 +20,7 @@ const usePassport = require('./config/passport')
 require('./config/mongoose')
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT
 
 // 載入 method-override
 const methodOverride = require('method-override')
@@ -22,7 +30,7 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))

@@ -4,6 +4,7 @@ const router = express.Router()
 const home = require('./modules/home')
 const todos = require('./modules/todos')
 const users = require('./modules/users')
+const auth = require('./modules/auth')  // 引用模組
 
 router.use('/', function (req, res, next) {
   const method = req.method
@@ -26,10 +27,11 @@ router.use('/', function (req, res, next) {
   next()
 })
 
-const { authenticator} = require('../middleware/auth')
+const { authenticator } = require('../middleware/auth')
 
 router.use('/todos', authenticator, todos)
 router.use('/users', users)
+router.use('/auth', auth)  // 掛載模組
 router.use('/', authenticator, home)
 // 匯出路由器
 module.exports = router
